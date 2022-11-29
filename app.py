@@ -47,6 +47,11 @@ def add_doce():
         for i in ingrds:
             list_qntd.append(int(request.form[i]))
 
+        calc = 0
+        for i in range(len(ingrds)):
+            calc += BANCO.retornar_precoUni_ingrediente()*BANCO.retornar_gramaTot_ingrediente()
+        calc_tot = calc * qntd
+
         BANCO.inserir_doce(nome, qntd)
         BANCO.inserir_receita(ingrds, list_qntd)
 

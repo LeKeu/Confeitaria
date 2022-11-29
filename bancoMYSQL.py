@@ -72,21 +72,21 @@ class Banco:
         # db.close()
 
 
-teste = Banco()
-#print(teste.select_ingredientes()[0])
-#teste.inserir_ingrediente('Leite condensado semideslatado', 2.68, 395)
-#teste.inserir_ingrediente('Leite condensado semideslatado', 2.68, 395)
-#teste.inserir_ingrediente('Manteiga com sal itambé', 24.50, 500)
-#teste.inserir_ingrediente('Alpino Achocolatado em pó', 19.99, 1000)
-#teste.inserir_ingrediente('Confeito miçanga 8 cores', 5.15, 100)
-#teste.inserir_ingrediente('Forminha papel laminadas', 19.40, 200)
+    def retornar_precoUni_ingrediente(self, id_ingrd):
+        try:
+            cursor.execute(f"SELECT preco_grama_unidade FROM Ingrediente WHERE ID_ingrediente = {int(id_ingrd)}")
+            select = cursor.fetchall()
+            return select
+        except Exception as e:
+            print(e)
 
-
-#teste.inserir_doce('Aleluia', 13, 5)
-
-
-
-
+    def retornar_gramaTot_ingrediente(self, id_ingrd):
+        try:
+            cursor.execute(f"SELECT total_gramas FROM Ingrediente WHERE ID_ingrediente = {int(id_ingrd)}")
+            select = cursor.fetchall()
+            return select
+        except Exception as e:
+            print(e)
 
 
 
