@@ -1,0 +1,33 @@
+<div class="row"><h3>DOCES</h3></div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div class="row">
+    <div class="col-md-4">
+      <div class="card card-body">
+        <form action="{{ url_for('add_doce') }}" method="POST">
+          <div class="form-group">
+            <input type="text" class="form-control" name="Dnome" placeholder="Nome">
+          </div>
+          <div class="form-group">
+            <input type="number" class="form-control" name="Dqntd" placeholder="Quantidade">
+          </div>
+            {% for ingrd in list_ingrd %}
+          <tr>
+            <td>
+                {{ingrd[1]}} <input type="checkbox" value="{{ingrd[0]}}" name="ingrd_checkbox">
+                <input type="number" name="{{ingrd[0]}}" value="0">
+            </td>
+          </tr>
+          {% endfor %}
+          <button class="btn btn-primary btn-block">SALVAR</button>
+        </form>
+      </div>
+    </div>
+    </div>
+</body>
+</html>
