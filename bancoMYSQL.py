@@ -1,4 +1,5 @@
 import pymysql
+from flask import flash
 
 db = pymysql.connect(host='localhost', user='root', password='Lk-08$14$22-!', database='projeto_integrado')
 
@@ -40,7 +41,7 @@ class Banco:
             cursor.execute(doce_id_query)
             doce_id = int(cursor.fetchone()[0])
             for i, q in zip(list_ingr, list_qntd):
-                print(i)
+                #print(i)
                 sql = f"""INSERT INTO Receita(ID_doce, ID_ingrediente, quantidade_ingrd) 
                                        VALUES('{doce_id}', {int(i)}, {q})"""
                 cursor.execute(sql)
@@ -60,6 +61,14 @@ class Banco:
         except Exception as e:
             print(e)
 
+    def select_doces(self):
+        try:
+            cursor.execute("SELECT * FROM doce")
+            select = cursor.fetchall()
+            return select
+        except Exception as e:
+            print(e)
+
     def deletar_ingrediente(self, id):
         try:
             cursor.execute(f"DELETE FROM Ingrediente WHERE ID_ingrediente = {int(id)}")
@@ -67,23 +76,46 @@ class Banco:
         except Exception as e:
             print(f"id --> {id}")
             print(e)
-
-
+            db.rollback()
         # db.close()
 
-
-    def retornar_precoUni_ingrediente(self, id_ingrd):
+    def deletar_doce(self, id):
         try:
-            cursor.execute(f"SELECT preco_grama_unidade FROM Ingrediente WHERE ID_ingrediente = {int(id_ingrd)}")
-            select = cursor.fetchall()
-            return select
+            cursor.execute(f"DELETE FROM doce WHERE ID_doce = {int(id)}")
+            db.commit()
         except Exception as e:
+            print(f"id --> {id}")
             print(e)
+            db.rollback()
+        # db.close()
 
-    def retornar_gramaTot_ingrediente(self, id_ingrd):
+    def update_calculo(self, qntd):
+        doce_id_query = "SELECT ID_doce FROM doce ORDER BY 1 DESC LIMIT 1"
         try:
-            cursor.execute(f"SELECT total_gramas FROM Ingrediente WHERE ID_ingrediente = {int(id_ingrd)}")
+            cursor.execute(doce_id_query)
+            doce_id = int(cursor.fetchone()[0])
+
+            sql = f'''
+                    SELECT d.nome_doce, i.nome_ingrediente, r.quantidade_ingrd, i.preco_grama_unidade FROM doce as d inner join
+                    receita as r on r.ID_doce = d.ID_doce inner join
+                    ingrediente as i on i.ID_ingrediente = r.ID_ingrediente
+                    WHERE d.ID_doce = {doce_id};
+                    '''
+
+            cursor.execute(sql)
             select = cursor.fetchall()
-            return select
+
+            calc = 0
+            for i in range(len(select)):
+                calc += select[i][2]*select[i][3]
+            print(f"calc = {calc}")
+
+            sql_update = f"UPDATE doce SET preco_total = {calc}, preco_unidade = {calc/float(qntd)} WHERE ID_doce = {doce_id}"
+            cursor.execute(sql_update)
+            db.commit()
+            #return float(select[0])
         except Exception as e:
+            print("owowowoOWOWOWO")
             print(e)
+            db.rollback()
+

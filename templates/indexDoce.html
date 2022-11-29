@@ -3,9 +3,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>DOCE</title>
+    <link rel="stylesheet" href="/static/tableSOS.css">
 </head>
 <body>
+  <form action="{{ url_for('inicio') }}">
+      <div class="form-group">
+          <button class="btn btn-primary btn-block">VOLTAR</button>
+      </div>
+  </form>
     <div class="row">
     <div class="col-md-4">
       <div class="card card-body">
@@ -16,15 +22,54 @@
           <div class="form-group">
             <input type="number" class="form-control" name="Dqntd" placeholder="Quantidade">
           </div>
-            {% for ingrd in list_ingrd %}
+            <table id="table_ingrd" class="table table-striped table-bordered" style="width:100%">
+        <thead>
           <tr>
-            <td>
-                {{ingrd[1]}} <input type="checkbox" value="{{ingrd[0]}}" name="ingrd_checkbox">
-                <input type="number" name="{{ingrd[0]}}" value="0">
+            <td>Nome</td>
+            <td>Preço</td>
+            <td>Total de Gramas</td>
+            <td></td>
+          </tr>
+        </thead>
+        <tbody>
+          {% for ingrd in list_ingrd %}
+          <tr>
+              <td>{{ingrd[1]}}</td>
+              <td>{{ingrd[2]}}</td>
+              <td>{{ingrd[3]}}</td>
+              <td width="130">
+                <input type="checkbox" value="{{ingrd[0]}}" name="ingrd_checkbox">
+              </td>
+              <td>
+                    <input type="number" name="{{ingrd[0]}}" value="0">
+              </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    <button class="btn btn-primary btn-block">SALVAR</button>
+      <table id="table_doces" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+          <tr>
+            <td>Nome</td>
+            <td>Preço Total</td>
+            <td>Preço Unidade</td>
+            <td></td>
+          </tr>
+        </thead>
+        <tbody>
+          {% for doce in list_doce %}
+          <tr>
+              <td>{{doce[1]}}</td>
+              <td>{{doce[2]}}</td>
+              <td>{{doce[3]}}</td>
+              <td width="130">
+              <a href="/delete_doce/{{doce[0]}}" class="btn btn-danger btn-delete btn-sm">DELETAR</a>
             </td>
           </tr>
           {% endfor %}
-          <button class="btn btn-primary btn-block">SALVAR</button>
+        </tbody>
+      </table>
         </form>
       </div>
     </div>
