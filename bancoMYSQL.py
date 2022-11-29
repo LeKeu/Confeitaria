@@ -87,19 +87,3 @@ class Banco:
             return select
         except Exception as e:
             print(e)
-
-
-
-
-'''
-import mysql.connector
-
-mydb = mysql.connector.connect(
-    host='localhost',
-    user='root',
-    password='Lk-08$14$22-!',
-    port='3306',
-    database='ativ_proj_pratic')
-
-cursor = mydb.cursor()
-'''
