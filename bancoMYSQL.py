@@ -1,5 +1,4 @@
 import pymysql
-from flask import flash
 
 db = pymysql.connect(host='localhost', user='root', password='Lk-08$14$22-!', database='projeto_integrado')
 
@@ -41,13 +40,11 @@ class Banco:
             cursor.execute(doce_id_query)
             doce_id = int(cursor.fetchone()[0])
             for i, q in zip(list_ingr, list_qntd):
-                #print(i)
                 sql = f"""INSERT INTO Receita(ID_doce, ID_ingrediente, quantidade_ingrd) 
                                        VALUES('{doce_id}', {int(i)}, {q})"""
                 cursor.execute(sql)
                 db.commit()
         except Exception as e:
-            print("NONONonO")
             print(e)
             db.rollback()
 
@@ -69,12 +66,24 @@ class Banco:
         except Exception as e:
             print(e)
 
+    def select_receita(self):
+        sql = '''
+            SELECT d.nome_doce, i.nome_ingrediente, i.preco_ingrediente, i.total_gramas, r.quantidade_ingrd, d.preco_total FROM receita r
+            inner join doce d on r.ID_doce = d.ID_doce
+            inner join ingrediente i on r.ID_ingrediente = i.ID_ingrediente
+              '''
+        try:
+            cursor.execute(sql)
+            select = cursor.fetchall()
+            return select
+        except Exception as e:
+            print(e)
+
     def deletar_ingrediente(self, id):
         try:
             cursor.execute(f"DELETE FROM Ingrediente WHERE ID_ingrediente = {int(id)}")
             db.commit()
         except Exception as e:
-            print(f"id --> {id}")
             print(e)
             db.rollback()
         # db.close()
@@ -84,7 +93,6 @@ class Banco:
             cursor.execute(f"DELETE FROM doce WHERE ID_doce = {int(id)}")
             db.commit()
         except Exception as e:
-            print(f"id --> {id}")
             print(e)
             db.rollback()
         # db.close()
@@ -108,14 +116,11 @@ class Banco:
             calc = 0
             for i in range(len(select)):
                 calc += select[i][2]*select[i][3]
-            print(f"calc = {calc}")
 
             sql_update = f"UPDATE doce SET preco_total = {calc}, preco_unidade = {calc/float(qntd)} WHERE ID_doce = {doce_id}"
             cursor.execute(sql_update)
             db.commit()
-            #return float(select[0])
         except Exception as e:
-            print("owowowoOWOWOWO")
             print(e)
             db.rollback()
 

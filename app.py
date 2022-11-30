@@ -12,7 +12,8 @@ def inicio():
     return render_template('indexInicio.html')
 
 #================================================================================
-#       ADICIONAR INGREDIENTES
+#================================================================================
+#       INGREDIENTES
 @app.route('/ingredientes')
 def ingredientes():
     list_users = BANCO.select_ingredientes()
@@ -47,6 +48,8 @@ def deletar_ingrediente(id):
 #================================================================================
 
 #       ADICIONAR DOCE
+
+
 @app.route('/add_doce', methods=['GET', 'POST'])
 def add_doce():
     if request.method == 'POST':
@@ -59,7 +62,6 @@ def add_doce():
             for i in ingrds:
                 list_qntd.append(int(request.form[i]))
 
-
             BANCO.inserir_doce(nome, qntd)
             BANCO.inserir_receita(ingrds, list_qntd)
             BANCO.update_calculo(qntd)
@@ -67,7 +69,6 @@ def add_doce():
         else:
             flash("Preencha todos os campos!", "error")
             print("HOHOHOH")
-
 
     list_ingrd = BANCO.select_ingredientes()
     list_doce = BANCO.select_doces()
@@ -81,9 +82,18 @@ def deletar_doce(id):
     return redirect(url_for('add_doce'))
 #================================================================================
 
+
 @app.route('/calcular', methods=['GET', 'POST'])
 def calcular():
     return render_template('indexCalc.html')
+
+
+@app.route('/receitas')
+def receitas():
+    list_receita = BANCO.select_receita()
+    return render_template('indexReceita.html', list_receita=list_receita)
+
+
 
 
 if __name__ == "__main__":
