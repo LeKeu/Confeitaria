@@ -19,18 +19,6 @@
     </div>
 
 <script>
-const btnDelete= document.querySelectorAll('.btn-delete');
-if(btnDelete) {
-  const btnArray = Array.from(btnDelete);
-  btnArray.forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-      if(!confirm('Tem certeza que uer deletar o ingrediente?')){
-        e.preventDefault();
-      }
-    });
-  })
-}
-
 $(document).ready(function() {
     $('#example').DataTable({
       "aLengthMenu": [[3, 5, 10, 25, -1], [3, 5, 10, 25, "All"]],
@@ -38,7 +26,6 @@ $(document).ready(function() {
        }
     );
 } );
-
 </script>
   </body>
 </html>

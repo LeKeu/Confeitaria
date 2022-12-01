@@ -50,6 +50,13 @@ class Doce(Banco):
             Banco.cursor.execute(sql)
             select = Banco.cursor.fetchall()
 
+            '''
+            (CA + CF) / 1 - ML
+            CF -> gasto com gasolina e embalagem
+            CA -> calc
+            ML -> em %, quanto ele deseja ganhar. pegar do q a gente mandou do girotto ou perguntar p pessoa
+            '''
+
             calc = 0
             for i in range(len(select)):
                 calc += select[i][2]*select[i][3]

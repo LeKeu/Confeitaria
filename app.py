@@ -17,6 +17,7 @@ app.secret_key = 'filoGoretti'
 
 @app.route('/')
 def inicio():
+    #BANCO.close_db()
     return render_template('indexInicio.html')
 
 # ================================================================================
@@ -25,8 +26,8 @@ def inicio():
 
 @app.route('/ingredientes')
 def ingredientes():
-    list_users = INGREDIENTE.select_ingredientes()
-    return render_template('indexIngrediente.html', list_users=list_users)
+    list_ingrd = INGREDIENTE.select_ingredientes()
+    return render_template('indexIngrediente.html', list_ingrd=list_ingrd)
 
 
 @app.route('/add_ingrediente', methods=['POST'])
@@ -47,7 +48,7 @@ def add_ingrediente():
         return redirect(url_for('ingredientes'))
 
 
-@app.route('/delete_ingrd/<string:id>', methods=['POST', 'GET'])
+@app.route('/delete_ingrd/<string:id_ingrd>', methods=['POST', 'GET'])
 def deletar_ingrediente(id_ingrd):
     INGREDIENTE.deletar_ingrediente(id_ingrd)
     flash("Ingrediente Deletado!", "info")
@@ -75,6 +76,9 @@ def add_doce():
             DOCE.update_calculo(qntd)
             flash("Doce Adicionado!", "info")
         else:
+            print(ingrds)
+            print(nome)
+            print(qntd)
             flash("Preencha todos os campos!", "error")
 
     list_ingrd = INGREDIENTE.select_ingredientes()
@@ -82,7 +86,7 @@ def add_doce():
     return render_template('indexDoce.html', list_ingrd=list_ingrd, list_doce=list_doce)
 
 
-@app.route('/delete_doce/<string:id>', methods=['POST', 'GET'])
+@app.route('/delete_doce/<string:id_doce>', methods=['POST', 'GET'])
 def deletar_doce(id_doce):
     DOCE.deletar_doce(id_doce)
     flash("Doce Deletado!", "info")

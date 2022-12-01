@@ -30,6 +30,10 @@
             <td>Total de Gramas</td>
             <td>Selecionar</td>
             <td>Quantidade</td>
+            <td>Preço Fixo</td>
+            <td>Valor</td>
+            <td>Taxa</td>
+            <td>Valor</td>
           </tr>
         </thead>
         <tbody>
@@ -42,8 +46,20 @@
                 <input type="checkbox" value="{{ingrd[0]}}" name="ingrd_checkbox">
               </td>
               <td>
-                    <input type="number" name="{{ingrd[0]}}" value="0">
+                <input type="number" name="{{ingrd[0]}}" value="0">
               </td>
+            <td width="130">
+              <input type="checkbox" value="pf_{{ingrd[0]}}" name="pf_checkbox">
+            </td>
+            <td>
+              <input type="number" name="pf_{{ingrd[0]}}" value="0">
+            </td>
+            <td width="130">
+              <input type="checkbox" value="taxa_{{ingrd[0]}}" name="taxa_checkbox">
+            </td>
+            <td>
+              <input type="number" name="taxa_{{ingrd[0]}}" value="0">
+            </td>
           </tr>
           {% endfor %}
         </tbody>

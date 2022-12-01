@@ -6,9 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="d2fc846e-fd3e-4f58-9245-ce39c5376826" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Doce.py" beforeDir="false" afterPath="$PROJECT_DIR$/Doce.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bancoMYSQL.py" beforeDir="false" afterPath="$PROJECT_DIR$/bancoMYSQL.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/indexDoce.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/indexDoce.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/indexIngrediente.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/indexIngrediente.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/indexInicio.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/indexInicio.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/indexReceita.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/indexReceita.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/layout.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,21 +34,24 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectId" id="2I6c2hPeW86jT2pCVj53NmfVLXG" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/AA_NAO_APAGAR/Aa/Cesupa/4Semestre/TeoriaDosGrafos&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "D:/AA_NAO_APAGAR/Aa/Cesupa/4Semestre/ResolucaoDifDeProblemas",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\AA_NAO_APAGAR\Aa\Cesupa\4Semestre\EngDeSoftware" />
