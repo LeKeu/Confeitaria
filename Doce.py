@@ -3,31 +3,34 @@ from bancoMYSQL import Banco
 
 class Doce(Banco):
 
-    def inserir_doce(self, nome, quantidade, pf, taxa):
+    def inserir_doce(self, nome, quantidade, pf, taxa, list_qntd_aux):
 
-        if pf > 0.0 and taxa == 0.0:
-            print("1111")
-            sql = f'''INSERT INTO Doce(nome_doce, quantidade_doce, preco_fixo) 
-                        VALUES('{nome}', {quantidade}, {pf})'''
-        elif taxa > 0 and pf == 0:
-            print("2222")
-            sql = f'''INSERT INTO Doce(nome_doce, quantidade_doce, taxa) 
-                                    VALUES('{nome}', {quantidade}, {taxa})'''
-        elif (taxa and pf) > 0:
-            print("3333")
-            sql = f'''INSERT INTO Doce(nome_doce, quantidade_doce, preco_fixo, taxa) 
-                                    VALUES('{nome}', {quantidade}, {pf}, {taxa})'''
+        if float(quantidade) > 0 and not any(n <= 0 for n in list_qntd_aux):
+            if pf > 0.0 and taxa == 0.0:
+                print("1111")
+                sql = f'''INSERT INTO Doce(nome_doce, quantidade_doce, preco_fixo) 
+                            VALUES('{nome}', {quantidade}, {pf})'''
+            elif taxa > 0 and pf == 0:
+                print("2222")
+                sql = f'''INSERT INTO Doce(nome_doce, quantidade_doce, taxa) 
+                                        VALUES('{nome}', {quantidade}, {taxa})'''
+            elif (taxa and pf) > 0:
+                print("3333")
+                sql = f'''INSERT INTO Doce(nome_doce, quantidade_doce, preco_fixo, taxa) 
+                                        VALUES('{nome}', {quantidade}, {pf}, {taxa})'''
+            else:
+                print("4444")
+                sql = f'''INSERT INTO Doce(nome_doce, quantidade_doce) 
+                                        VALUES('{nome}', {quantidade})'''
+
+            try:
+                Banco.cursor.execute(sql)
+                Banco.db.commit()
+            except Exception as e:
+                print(e)
+                Banco.db.rollback()
         else:
-            print("4444")
-            sql = f'''INSERT INTO Doce(nome_doce, quantidade_doce) 
-                                    VALUES('{nome}', {quantidade})'''
-
-        try:
-            Banco.cursor.execute(sql)
-            Banco.db.commit()
-        except Exception as e:
-            print(e)
-            Banco.db.rollback()
+            print("QUANTIDADE DOCE NEGATIVA!")
 
         # db.close()
 
