@@ -63,22 +63,31 @@ def deletar_ingrediente(id_ingrd):
 def add_doce():
     if request.method == 'POST':
         ingrds = request.form.getlist("ingrd_checkbox")
+
         nome = request.form['Dnome']
         qntd = request.form['Dqntd']
+        pf = request.form.get('pf_checkbox')
+        taxa = request.form.get('taxa_checkbox')
+        pf_valor = 0.0
+        taxa_valor = 0.0
+
+        if pf is not None:
+            pf_valor = request.form['pf_input']
+
+        if taxa is not None:
+            taxa_valor = request.form['taxa_input']
 
         if (nome and qntd) != '' and len(ingrds) > 0:
             list_qntd = []
+
             for i in ingrds:
                 list_qntd.append(int(request.form[i]))
 
-            DOCE.inserir_doce(nome, qntd)
+            DOCE.inserir_doce(nome, qntd, float(pf_valor), float(taxa_valor))
             RECEITA.inserir_receita(ingrds, list_qntd)
             DOCE.update_calculo(qntd)
-            flash("Doce Adicionado!", "info")
+            #flash("Doce Adicionado!", "info")
         else:
-            print(ingrds)
-            print(nome)
-            print(qntd)
             flash("Preencha todos os campos!", "error")
 
     list_ingrd = INGREDIENTE.select_ingredientes()

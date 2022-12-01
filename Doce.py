@@ -3,10 +3,25 @@ from bancoMYSQL import Banco
 
 class Doce(Banco):
 
-    def inserir_doce(self, nome, quantidade):
+    def inserir_doce(self, nome, quantidade, pf, taxa):
 
-        sql = f"""INSERT INTO Doce(nome_doce, quantidade_doce) 
-                        VALUES('{nome}', {quantidade})"""
+        if pf > 0.0 and taxa == 0.0:
+            print("1111")
+            sql = f'''INSERT INTO Doce(nome_doce, quantidade_doce, preco_fixo) 
+                        VALUES('{nome}', {quantidade}, {pf})'''
+        elif taxa > 0 and pf == 0:
+            print("2222")
+            sql = f'''INSERT INTO Doce(nome_doce, quantidade_doce, taxa) 
+                                    VALUES('{nome}', {quantidade}, {taxa})'''
+        elif (taxa and pf) > 0:
+            print("3333")
+            sql = f'''INSERT INTO Doce(nome_doce, quantidade_doce, preco_fixo, taxa) 
+                                    VALUES('{nome}', {quantidade}, {pf}, {taxa})'''
+        else:
+            print("4444")
+            sql = f'''INSERT INTO Doce(nome_doce, quantidade_doce) 
+                                    VALUES('{nome}', {quantidade})'''
+
         try:
             Banco.cursor.execute(sql)
             Banco.db.commit()
