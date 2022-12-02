@@ -17,7 +17,6 @@ app.secret_key = 'filoGoretti'
 
 @app.route('/')
 def inicio():
-    #BANCO.close_db()
     return render_template('indexInicio.html')
 
 # ================================================================================
@@ -56,9 +55,7 @@ def deletar_ingrediente(id_ingrd):
     flash("Ingrediente Deletado!", "info")
     return redirect(url_for('ingredientes'))
 # ================================================================================
-# ================================================================================
-
-#       ADICIONAR DOCE
+#        DOCE
 
 
 @app.route('/add_doce', methods=['GET', 'POST'])
@@ -68,27 +65,22 @@ def add_doce():
 
         nome = request.form['Dnome']
         qntd = request.form['Dqntd']
+        taxa_lucro = request.form['taxaLucro']
         pf = request.form.get('pf_checkbox')
-        taxa = request.form.get('taxa_checkbox')
         pf_valor = 0.0
-        taxa_valor = 0.0
 
         if pf is not None:
             pf_valor = request.form['pf_input']
 
-        if taxa is not None:
-            taxa_valor = request.form['taxa_input']
-
-        if (nome and qntd) != '' and len(ingrds) > 0:
+        if (nome and qntd and taxa_lucro) != '' and len(ingrds) > 0:
             list_qntd = []
 
             for i in ingrds:
                 list_qntd.append(int(request.form[i]))
 
-            DOCE.inserir_doce(nome, qntd, float(pf_valor), float(taxa_valor), list_qntd)
+            DOCE.inserir_doce(nome, qntd, float(pf_valor), list_qntd)
             RECEITA.inserir_receita(ingrds, list_qntd)
-            DOCE.update_calculo(qntd)
-            #flash("Doce Adicionado!", "info")
+            DOCE.update_calculo(qntd, pf_valor, taxa_lucro)
         else:
             flash("Preencha todos os campos!", "error")
 
@@ -100,7 +92,6 @@ def add_doce():
 @app.route('/delete_doce/<string:id_doce>', methods=['POST', 'GET'])
 def deletar_doce(id_doce):
     DOCE.deletar_doce(id_doce)
-    flash("Doce Deletado!", "info")
     return redirect(url_for('add_doce'))
 
 # ================================================================================
@@ -108,7 +99,8 @@ def deletar_doce(id_doce):
 
 @app.route('/calcular', methods=['GET', 'POST'])
 def calcular():
-    return render_template('indexCalc.html')
+    list_doces = DOCE.select_doces()
+    return render_template('indexCalc.html', list_doces=list_doces)
 
 
 @app.route('/receitas')

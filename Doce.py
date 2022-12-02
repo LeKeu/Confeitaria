@@ -3,25 +3,15 @@ from bancoMYSQL import Banco
 
 class Doce(Banco):
 
-    def inserir_doce(self, nome, quantidade, pf, taxa, list_qntd_aux):
+    def inserir_doce(self, nome, quantidade, pf, list_qntd_aux):
 
         if float(quantidade) > 0 and not any(n <= 0 for n in list_qntd_aux):
-            if pf > 0.0 and taxa == 0.0:
-                print("1111")
+            if pf > 0.0:
                 sql = f'''INSERT INTO Doce(nome_doce, quantidade_doce, preco_fixo) 
                             VALUES('{nome}', {quantidade}, {pf})'''
-            elif taxa > 0 and pf == 0:
-                print("2222")
-                sql = f'''INSERT INTO Doce(nome_doce, quantidade_doce, taxa) 
-                                        VALUES('{nome}', {quantidade}, {taxa})'''
-            elif (taxa and pf) > 0:
-                print("3333")
-                sql = f'''INSERT INTO Doce(nome_doce, quantidade_doce, preco_fixo, taxa) 
-                                        VALUES('{nome}', {quantidade}, {pf}, {taxa})'''
             else:
-                print("4444")
                 sql = f'''INSERT INTO Doce(nome_doce, quantidade_doce) 
-                                        VALUES('{nome}', {quantidade})'''
+                                            VALUES('{nome}', {quantidade})'''
 
             try:
                 Banco.cursor.execute(sql)
@@ -51,7 +41,7 @@ class Doce(Banco):
             Banco.db.rollback()
         # db.close()
 
-    def update_calculo(self, qntd):
+    def update_calculo(self, qntd, cf, ml):
         doce_id_query = "SELECT ID_doce FROM doce ORDER BY 1 DESC LIMIT 1"
         try:
             Banco.cursor.execute(doce_id_query)
@@ -68,20 +58,27 @@ class Doce(Banco):
             Banco.cursor.execute(sql)
             select = Banco.cursor.fetchall()
 
-            '''
-            (CA + CF) / 1 - ML
-            CF -> gasto com gasolina e embalagem
-            CA -> calc
-            ML -> em %, quanto ele deseja ganhar. pegar do q a gente mandou do girotto ou perguntar p pessoa
-            '''
-
             calc = 0
             for i in range(len(select)):
                 calc += select[i][2]*select[i][3]
 
-            sql_update = f'''UPDATE doce SET preco_total = {calc}, preco_unidade = {calc/float(qntd)} 
+            func = (calc + float(cf)) / 1 - (float(ml)/100)
+
+            sql_update = f'''UPDATE doce SET preco_total = {calc}, 
+            preco_unidade = {calc/float(qntd)}, preco_venda = {func} 
             WHERE ID_doce = {doce_id}'''
+
             Banco.cursor.execute(sql_update)
+
+            Banco.cursor.execute(sql)
+            select = Banco.cursor.fetchall()
+
+            calc = f'x * {select[0][5]} - ('
+            for i in range(len(select)):
+                calc = calc + f'+({select[i][4]} * (x*{select[i][2]}/{select[i][6]}))'
+            calc = calc + f') - {select[0][7]}'
+            print(calc)
+
             Banco.db.commit()
         except Exception as e:
             print(e)

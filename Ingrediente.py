@@ -15,8 +15,6 @@ class Ingrediente(Banco):
             print(e)
             Banco.db.rollback()
 
-        # db.close()
-
     def select_ingredientes(self):
         try:
             Banco.cursor.execute("SELECT * FROM Ingrediente")
@@ -32,4 +30,3 @@ class Ingrediente(Banco):
         except Exception as e:
             print(e)
             Banco.db.rollback()
-        # db.close()
