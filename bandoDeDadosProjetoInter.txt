@@ -1,0 +1,34 @@
+create database projeto_integrado;
+
+create table Ingrediente(
+ID_ingrediente int not null primary key auto_increment,
+    nome_ingrediente char(30) not null,
+    preco_ingrediente float not null,
+    total_gramas float not null,
+    preco_grama_unidade float not null
+);
+
+create table Doce(
+	ID_doce int not null primary key auto_increment,
+    nome_doce char(30) not null,
+    preco_venda float,
+    preco_total float,
+    preco_unidade float,
+    quantidade_doce int not null,
+    preco_fixo float
+);
+
+
+create table Receita(
+    ID_doce int not null,
+    ID_ingrediente int not null,
+    quantidade_ingrd float not null /*GRAMAS*/,
+    FOREIGN KEY(ID_doce) REFERENCES Doce(ID_doce),
+    FOREIGN KEY(ID_ingrediente) REFERENCES Ingrediente(ID_ingrediente)
+);
+
+Alter table receita drop foreign key receita_ibfk_1;
+alter table receita add FOREIGN KEY(ID_doce) REFERENCES Doce(ID_doce) on DELETE CASCADE;
+
+Alter table receita drop foreign key receita_ibfk_2;
+alter table receita add FOREIGN KEY(ID_ingrediente) REFERENCES Ingrediente(ID_ingrediente) on DELETE CASCADE;

@@ -18,8 +18,6 @@ class Doce(Banco):
         else:
             print("QUANTIDADE DOCE NEGATIVA!")
 
-        # db.close()
-
     def select_doces(self):
         try:
             Banco.cursor.execute("SELECT * FROM doce")
@@ -44,7 +42,7 @@ class Doce(Banco):
             doce_id = int(Banco.cursor.fetchone()[0])
 
             sql = f'''
-                    SELECT d.nome_doce, i.nome_ingrediente, r.quantidade_ingrd, i.preco_grama_unidade 
+                    SELECT d.nome_doce, i.nome_ingrediente, r.quantidade_ingrd, i.preco_grama_unidade, i.preco_ingrediente, d.preco_venda, i.total_gramas, d.preco_fixo
                     FROM doce as d inner join
                     receita as r on r.ID_doce = d.ID_doce inner join
                     ingrediente as i on i.ID_ingrediente = r.ID_ingrediente
@@ -67,6 +65,15 @@ class Doce(Banco):
             Banco.cursor.execute(sql_update)
 
             Banco.db.commit()
+
+            Banco.cursor.execute(sql)
+            select = Banco.cursor.fetchall()
+
+            calc = f'x * {select[0][5]} - ('
+            for i in range(len(select)):
+                calc = calc + f'+({select[i][4]} * (x*{select[i][2]}/{select[i][6]}))'
+            calc = calc + f') - {select[0][7]}'
+            print(f"Adicionar a função para plotar no colab:\n{calc}")
 
         except Exception as e:
             print(e)
