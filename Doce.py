@@ -3,15 +3,11 @@ from bancoMYSQL import Banco
 
 class Doce(Banco):
 
-    def inserir_doce(self, nome, quantidade, pf, list_qntd_aux):
+    def inserir_doce(self, nome, quantidade, list_qntd_aux, pf=0):
 
         if float(quantidade) > 0 and not any(n <= 0 for n in list_qntd_aux):
-            if pf > 0.0:
-                sql = f'''INSERT INTO Doce(nome_doce, quantidade_doce, preco_fixo) 
-                            VALUES('{nome}', {quantidade}, {pf})'''
-            else:
-                sql = f'''INSERT INTO Doce(nome_doce, quantidade_doce) 
-                                            VALUES('{nome}', {quantidade})'''
+            sql = f'''INSERT INTO Doce(nome_doce, quantidade_doce, preco_fixo) 
+                                                        VALUES('{nome}', {quantidade}, {pf})'''
 
             try:
                 Banco.cursor.execute(sql)

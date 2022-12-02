@@ -40,8 +40,6 @@ def add_ingrediente():
             preco.replace(',', '.')
 
         if (nome and preco and tot_grama) != '' and float(preco) > 0 and float(tot_grama) > 0:
-            print(preco)
-            print(tot_grama)
             INGREDIENTE.inserir_ingrediente(nome, float(preco), float(tot_grama))
             flash("Ingrediente Adicionado!", "info")
         else:
@@ -78,7 +76,7 @@ def add_doce():
             for i in ingrds:
                 list_qntd.append(int(request.form[i]))
 
-            DOCE.inserir_doce(nome, qntd, float(pf_valor), list_qntd)
+            DOCE.inserir_doce(nome, qntd, list_qntd, float(pf_valor))
             RECEITA.inserir_receita(ingrds, list_qntd)
             DOCE.update_calculo(qntd, pf_valor, taxa_lucro)
         else:
