@@ -70,16 +70,9 @@ class Doce(Banco):
 
             Banco.cursor.execute(sql_update)
 
-            Banco.cursor.execute(sql)
-            select = Banco.cursor.fetchall()
-
-            calc = f'x * {select[0][5]} - ('
-            for i in range(len(select)):
-                calc = calc + f'+({select[i][4]} * (x*{select[i][2]}/{select[i][6]}))'
-            calc = calc + f') - {select[0][7]}'
-            print(calc)
-
             Banco.db.commit()
+
         except Exception as e:
             print(e)
             Banco.db.rollback()
+
